@@ -3,6 +3,7 @@ package com.engine.fakau.facebookgoogleauthentication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private SignInButton signInButton;
-    private final int RC_SIGN_IN = 0;
+    private final int RC_SIGN_IN_GOOGLE = 0;
+    private final int RC_SIGN_IN_FACEBOOK = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+                startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
             }
         });
     }
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN_GOOGLE) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -64,14 +66,18 @@ public class MainActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.d("APP",account.getEmail());
-            // Signed in successfully, show authenticated UI.
-           // updateUI(account);
+            updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.e("APP", "signInResult:failed code=" + e.getStatusCode());
             //updateUI(null);
+        }
+    }
+
+    private void updateUI(GoogleSignInAccount acct) {
+        if (acct != null) {
+            startActivity(new Intent(MainActivity.this, UserProfile.class));
         }
     }
 }
