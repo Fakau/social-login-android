@@ -1,4 +1,4 @@
-package com.engine.fakau.googleauthentication;
+package com.engine.fakau.facebookgoogleauthentication;
 
 import org.junit.Test;
 

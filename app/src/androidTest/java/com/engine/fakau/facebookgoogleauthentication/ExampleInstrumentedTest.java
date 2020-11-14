@@ -1,4 +1,4 @@
-package com.engine.fakau.googleauthentication;
+package com.engine.fakau.facebookgoogleauthentication;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.engine.fakau.googleauthentication", appContext.getPackageName());
+        assertEquals("com.engine.fakau.facebookgoogleauthentication", appContext.getPackageName());
     }
 }
